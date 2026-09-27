@@ -10,7 +10,7 @@ local Debris = game:GetService("Debris")
 
 --// Sistema de VerificaÃ§Ã£o
 local USUARIOS_AUTORIZADOS = {
-    ["silvaa_lenda"] = true,
+    ["Hey_zPUDIM"] = true,
     ["patodev_lenda"] = true,
     ["rip_darkinho25"] = true,
     [""] = true,
