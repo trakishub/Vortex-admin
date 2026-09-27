@@ -1,3 +1,149 @@
+local Libary = loadstring(game:HttpGet("https://raw.githubusercontent.com/trakishub/V-rtex-library-/refs/heads/main/Vortex"))()
+workspace.FallenPartsDestroyHeight = -math.huge
+
+local Window = Libary:MakeWindow({
+    Title = "   Vortex Hub",
+    SubTitle = "   By: Vitinwz22",
+    LoadText = "Carregando Vortex Hub",
+    Flags = "VortexHub"
+})
+
+Window:AddMinimizeButton({
+    Button = {
+        Image = 'rbxassetid://73920359467024',
+        BackgroundTransparency = 0,
+        Size = UDim2.new(0, 35, 0, 35),
+    },
+    Corner = {
+        CornerRadius = UDim.new(0, 100),
+    },
+})
+
+--// LED ANIMADO NO BOTÃO ORIGINAL DA ZYRO
+
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+task.spawn(function()
+
+    -- Espera a interface da Zyro carregar
+    local Nexus
+
+    for i = 1, 50 do
+        Nexus = CoreGui:FindFirstChild("Nexus Library V1")
+
+        if Nexus then
+            break
+        end
+
+        task.wait(0.1)
+    end
+
+    if not Nexus then
+        warn("[Vortex Hub] Nexus Library V1 não encontrado.")
+        return
+    end
+
+    -- Pega o botão original
+    local Button
+
+    for i = 1, 50 do
+        Button = Nexus:FindFirstChild("ImageButton")
+
+        if Button then
+            break
+        end
+
+        task.wait(0.1)
+    end
+
+    if not Button then
+        warn("[Vortex Hub] Botão da Zyro não encontrado.")
+        return
+    end
+
+    -- Remove LED antigo caso o script seja executado novamente
+    local OldLED = Button:FindFirstChild("TrakisLED")
+
+    if OldLED then
+        OldLED:Destroy()
+    end
+
+    -- Cria a borda LED
+    local LED = Instance.new("UIStroke")
+    LED.Name = "VortexLED"
+    LED.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    LED.Color = Color3.fromRGB(138, 43, 226) -- Roxo (Purple/BlueViolet)
+    LED.Thickness = 2
+    LED.Transparency = 0
+    LED.Parent = Button
+
+    -- Animação
+    task.spawn(function()
+        while Button.Parent and LED.Parent do
+
+            local Dim = TweenService:Create(
+                LED,
+                TweenInfo.new(
+                    0.8,
+                    Enum.EasingStyle.Sine,
+                    Enum.EasingDirection.InOut
+                ),
+                {
+                    Transparency = 0.65,
+                    Thickness = 1.5
+                }
+            )
+
+            Dim:Play()
+            Dim.Completed:Wait()
+
+            if not Button.Parent or not LED.Parent then
+                break
+            end
+
+            local Bright = TweenService:Create(
+                LED,
+                TweenInfo.new(
+                    0.8,
+                    Enum.EasingStyle.Sine,
+                    Enum.EasingDirection.InOut
+                ),
+                {
+                    Transparency = 0,
+                    Thickness = 3
+                }
+            )
+
+            Bright:Play()
+            Bright.Completed:Wait()
+        end
+    end)
+end)
+
+--// RESTO DO SEU SCRIPT CONTINUA AQUI
+
+
+local InfoTab = Window:MakeTab({ Title = "Info", Icon = "rbxassetid://15309138473" })
+
+InfoTab:AddSection({ "Informações do Script" })
+InfoTab:AddParagraph({ "Owner / Developer:", "Zyronis" })
+InfoTab:AddParagraph({ "Collaboration:", "Lolytadev, Rick/Shadow and Bazuka" })
+InfoTab:AddParagraph({ "Leaked by:", "Bazuka (eu recriei tudo) se for vazar, deixe meus creditos." })
+InfoTab:AddParagraph({ "You are using:", "Zyronis Hub Brookhaven " })
+InfoTab:AddParagraph({"Your executor:", executor})
+
+InfoTab:AddSection({ "Rejoin" })
+InfoTab:AddButton({
+    Name = "Rejoin",
+    Callback = function()
+        local TeleportService = game:GetService("TeleportService")
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+    end
+})
+
+--painel admin
+
 --// Serviços 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -10,9 +156,9 @@ local Debris = game:GetService("Debris")
 
 --// Sistema de VerificaÃ§Ã£o
 local USUARIOS_AUTORIZADOS = {
-    ["Hey_zPUDIM"] = true,
+    ["silvaa_lenda"] = true,
     ["patodev_lenda"] = true,
-    ["rip_darkinho25"] = true,
+    ["Hey_zPUDIM"] = true,
     [""] = true,
     [""] = true,
     [""] = true,
@@ -51,7 +197,7 @@ local TAG_TYPES = {
 }
 
 local Donos = {
-    ["patodev_lenda"] = TAG_TYPES.DONO,
+    ["Hey_zPUDIM"] = TAG_TYPES.DONO,
     ["silvaa_lenda"] = TAG_TYPES.DONO,
     ["darkizinho9910"] = TAG_TYPES.ADM,
     ["novax0548"] = TAG_TYPES.ADM,
@@ -516,7 +662,7 @@ local function ActivateMonster(player)
         Color = Color3.fromRGB(0, 255, 0),
         Font = Enum.Font.GothamBold
     })
-    
+
     -- Sistema de perseguiÃ§Ã£o
     while monsterActive and player.Character and player.Character:FindFirstChild("HumanoidRootPart") do
         local playerPos = player.Character.HumanoidRootPart.Position
@@ -956,7 +1102,7 @@ Window:EditOpenButton({
         end
     })
 
-        -- Aba Backrooms
+    -- Aba Backrooms
     local TabBackrooms = Window:Tab({ Title = "Backrooms", Icon = "skull", Locked = false })
     local SectionBackrooms = TabBackrooms:Section({ Title = "Sistema Backrooms", Icon = "door-open", Opened = true })
 
@@ -1037,3 +1183,4 @@ else
     -- UsuÃ¡rio nÃ£o autorizado - apenas carrega funÃ§Ãµes internas
     warn("[Swat hub] Painel oculto - Comandos internos ativos")
 end
+    
