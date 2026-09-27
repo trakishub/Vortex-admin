@@ -1159,9 +1159,6 @@ SectionBackrooms:Button({
     end
 })
 
-
-
-
     -- Aba Aviso
     local TabInfo = Window:Tab({ Title = "Aviso", Icon = "shield", Locked = false })
     local SectionInfo = TabInfo:Section({ Title = "Aviso do painel admin", Icon = "shield", Opened = true })
